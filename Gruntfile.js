@@ -30,22 +30,12 @@ module.exports = function(grunt) {
 
     // Configuration to be run (and then tested).
     divshot: {
-      default_options: {
+      server: {
         options: {
-        },
-        files: {
-          'tmp/default_options': ['test/fixtures/testing', 'test/fixtures/123'],
-        },
-      },
-      custom_options: {
-        options: {
-          separator: ': ',
-          punctuation: ' !!!',
-        },
-        files: {
-          'tmp/custom_options': ['test/fixtures/testing', 'test/fixtures/123'],
-        },
-      },
+          port:8000,
+          root: './',
+        }
+      }
     },
 
     // Unit tests.
