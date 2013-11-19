@@ -27,6 +27,7 @@ grunt.initConfig({
   divshot: {
     server: {
       options: {
+        keepAlive: true,
         port: 3474,
         hostname: 'localhost',
         root: './',
@@ -37,11 +38,17 @@ grunt.initConfig({
         cache_control: {}
       }
     }
-  },
+  }
 })
 ```
 
 ### Options
+
+#### keepAlive
+Type: `Boolean`
+Default value: `false`
+
+Once grunt's tasks have completed, the web server stops. This behavior can be changed with the `keepAlive` option
 
 #### port
 Type: `Number`

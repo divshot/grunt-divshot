@@ -27,6 +27,7 @@ module.exports = function(grunt) {
     var config;
     var dioExists = grunt.file.exists(process.cwd() + '/divshot.json');
     var ssExists = grunt.file.exists(process.cwd() + '/superstatic.json');
+    var createdConfigFile = false;
     
     if (!dioExists && !ssExists) {
       grunt.file.write(process.cwd() + '/divshot.json', JSON.stringify({
@@ -37,6 +38,7 @@ module.exports = function(grunt) {
         error_page: options.error_page
       }, null, 2));
       
+      createdConfigFile = true;
       dioExists = true;
     }
     
@@ -61,12 +63,16 @@ module.exports = function(grunt) {
     
     server.stdout.on('data', function () {
       process.nextTick(function () {
-        if (grunt.file.exists(process.cwd() + '/divshot.json')) grunt.file.delete(process.cwd() + '/divshot.json');
+        if (grunt.file.exists(process.cwd() + '/divshot.json') && createdConfigFile) {
+          grunt.file.delete(process.cwd() + '/divshot.json');
+        }
       });
     });
     
     server.stderr.on('data', function (data) {
       process.stderr.write(data.toString().red);
     });
+    
+    if (!options.keepAlive) process.nextTick(done);
   });
 };
