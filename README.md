@@ -1,6 +1,11 @@
 # grunt-divshot
 
-> Run Divshot.io locally. See [Divshot.io docs](http://docs.divshot.io/) for documentation and details about options.
+Perform common Divshot.io commands using Grunt.
+
+* Run a local server
+* Deploy to production, staging, and devleopment
+
+See [Divshot.io docs](http://docs.divshot.io/) for documentation and details about options.
 
 ## Getting Started
 This plugin requires Grunt `~0.4.1`
@@ -94,7 +99,7 @@ Key/value pairs of glob to path cache control settings
 * ` divshot:push:staging `
 * ` divshot:push:development `
 
-Each corresponds the features available in the [divshot-cli](https://github.com/divshot/divshot-cli)
+Each corresponds the features available in the [divshot-cli](https://github.com/divshot/divshot-cli/blob/master/README.md#push)
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
