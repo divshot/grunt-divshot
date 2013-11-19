@@ -12,6 +12,18 @@ module.exports = function(grunt) {
   var path = require('path');
   var superstaticDefaults = require('superstatic/lib/defaults');
   
+  grunt.registerTask('divshot:push:production', function () {
+    dioPush.call(this, 'production', this.async());
+  });
+  
+  grunt.registerTask('divshot:push:staging', function () {
+    dioPush.call(this, 'staging', this.async());
+  });
+  
+  grunt.registerTask('divshot:push:development', function () {
+    dioPush.call(this, 'development', this.async());
+  });
+  
   grunt.registerMultiTask('divshot', 'Run Divshot.io locally', function() {
     var done = this.async();
     var options = this.options({
@@ -52,8 +64,7 @@ module.exports = function(grunt) {
     // Start the server
     var server = grunt.util.spawn({
       cmd: path.resolve(__dirname, '../node_modules/.bin/superstatic'),
-      args: ['--port', options.port, '--host', options.hostname],
-      opts: {}
+      args: ['--port', options.port, '--host', options.hostname]
     }, function (err, result, code) {
       if (err) {
         grunt.fail.fatal(err);
@@ -75,4 +86,27 @@ module.exports = function(grunt) {
     
     if (!options.keepAlive) process.nextTick(done);
   });
+
+  function dioPush (env, done) {
+    var done = this.async();
+    var push = grunt.util.spawn({
+      cmd: path.resolve(__dirname, '../node_modules/.bin/divshot'),
+      args: ['push', env]
+    }, function (err, result, code) {
+      if (err) {
+        grunt.fail.fatal(err);
+        done();
+      }
+    });
+    
+    push.stdout.on('data', function (data) {
+      grunt.log.write(data.toString());
+    });
+    
+    push.stderr.on('data', function (data) {
+      process.stderr.write(data.toString());
+    });
+    
+    push.on('close', done);
+  }
 };

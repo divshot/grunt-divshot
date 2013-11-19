@@ -86,5 +86,15 @@ Default value: `{}`
 
 Key/value pairs of glob to path cache control settings
 
+## Deploying to Divshot.io with Grunt
+
+**grunt-divshot** automatically creates 3 tasks you can use to deploy to [Divshot.io](http://divshot.io) using Grunt.
+
+* ` divshot:push:production `
+* ` divshot:push:staging `
+* ` divshot:push:development `
+
+Each corresponds the features available in the [divshot-cli](https://github.com/divshot/divshot-cli)
+
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
