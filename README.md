@@ -99,6 +99,55 @@ Key/value pairs of glob to path cache control settings
 * ` divshot:push:staging `
 * ` divshot:push:development `
 
+### Usage
+In your project's Gruntfile, add a section named any of the above tasks.
+
+```js
+'divshot:push:production': {
+  options: {
+    token: 'custom_access_token',
+    root: './',
+    clean_urls: false,
+    routes: {
+      '**': 'index.html'
+    },
+    cache_control: {}
+  }
+}
+```
+
+### Options
+
+#### token
+type: `String`
+Default value: `null`
+
+Override your user access token. Useful for build and deploy environments.
+
+#### root
+Type: `String`
+Default value: `./`
+
+The relative path the the directory to run the server out of
+
+#### clean_urls
+Type: `Boolean`
+Default value: `false`
+
+Force Divshot.io server to write clean urls for `.html` files
+
+#### routes
+Type: `Object`
+Default value: `{}`
+
+Key/value pairs of glob to path routing
+
+#### cache_control
+Type: `Object`
+Default value: `{}`
+
+Key/value pairs of glob to path cache control settings
+
 Each corresponds the features available in the [divshot-cli](https://github.com/divshot/divshot-cli/blob/master/README.md#push)
 
 ## Contributing

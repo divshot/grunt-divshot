@@ -1,7 +1,7 @@
 {
   "name": "grunt-divshot",
   "description": "Run Divshot.io locally",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "homepage": "https://github.com/divshot/grunt-divshot",
   "author": {
     "name": "Divshot",
@@ -41,6 +41,7 @@
   ],
   "dependencies": {
     "superstatic": "~0.4.x",
-    "divshot-cli": "~0.3.2"
+    "divshot-cli": "~0.3.2",
+    "lodash": "~2.3.0"
   }
 }
