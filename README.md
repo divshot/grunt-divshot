@@ -5,7 +5,7 @@ Perform common Divshot.io commands using Grunt.
 * Run a local server
 * Deploy to production, staging, and devleopment
 
-See [Divshot.io docs](http://docs.divshot.io/) for documentation and details about options.
+See [Divshot.io docs](http://docs.divshot.io/guides/configuration) for documentation and details about options.
 
 ## Getting Started
 This plugin requires Grunt `~0.4.1`
