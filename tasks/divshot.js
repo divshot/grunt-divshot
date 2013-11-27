@@ -34,18 +34,12 @@ module.exports = function(grunt) {
       root: superstaticDefaults.DIRECTORY,
       clean_urls: false,
       routes: {},
-      cache_control: {}
+      cache_control: {},
+      exclude: []
     });
     
     if (!configFilesExists()) {
-      grunt.file.write(process.cwd() + '/divshot.json', JSON.stringify({
-        root: options.root,
-        clean_urls: options.clean_urls,
-        routes: options.routes,
-        cache_control: options.cache_control,
-        error_page: options.error_page
-      }, null, 2));
-      
+      grunt.file.write(process.cwd() + '/divshot.json', JSON.stringify(options, null, 2));
       createdConfigFile = true;
     }
     

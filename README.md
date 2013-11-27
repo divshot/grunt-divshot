@@ -111,7 +111,8 @@ In your project's Gruntfile, add a section named any of the above tasks.
     routes: {
       '**': 'index.html'
     },
-    cache_control: {}
+    cache_control: {},
+    exclude: []
   }
 }
 ```
@@ -149,6 +150,12 @@ Default value: `{}`
 Key/value pairs of glob to path cache control settings
 
 Each corresponds the features available in the [divshot-cli](https://github.com/divshot/divshot-cli/blob/master/README.md#push)
+
+#### exclude
+type: `Array`
+Default value: `[]`
+
+Array of globs of files or directories to exclude on deploy
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
