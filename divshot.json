@@ -1,0 +1,9 @@
+{
+  "port": 8000,
+  "hostname": "127.0.0.1",
+  "root": "./",
+  "clean_urls": false,
+  "routes": {},
+  "cache_control": {},
+  "exclude": []
+}

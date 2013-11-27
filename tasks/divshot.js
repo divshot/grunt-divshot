@@ -12,17 +12,16 @@ module.exports = function(grunt) {
   var path = require('path');
   var _ = require('lodash');
   var superstaticDefaults = require('superstatic/lib/defaults');
+  var environments = [
+    'development',
+    'staging',
+    'production'
+  ];
   
-  grunt.registerTask('divshot:push:production', function () {
-    push.call(this, 'production', this.async());
-  });
-  
-  grunt.registerTask('divshot:push:staging', function () {
-    push.call(this, 'staging', this.async());
-  });
-  
-  grunt.registerTask('divshot:push:development', function () {
-    push.call(this, 'development', this.async());
+  _.each(environments, function (environment) {
+    grunt.registerTask('divshot:push:' + environment, function () {
+      push.call(this, environment, this.async());
+    });
   });
   
   grunt.registerMultiTask('divshot', 'Run Divshot.io locally', function() {
