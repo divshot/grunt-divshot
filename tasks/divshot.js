@@ -11,6 +11,7 @@
 module.exports = function(grunt) {
   var path = require('path');
   var _ = require('lodash');
+  var chalk = require('chalk');
   var superstaticDefaults = require('superstatic/lib/defaults');
   var environments = [
     'development',
@@ -62,7 +63,7 @@ module.exports = function(grunt) {
     });
     
     server.stderr.on('data', function (data) {
-      process.stderr.write(data.toString().red);
+      process.stderr.write(chalk.red(data.toString()));
     });
     
     if (!options.keepAlive) process.nextTick(done);
