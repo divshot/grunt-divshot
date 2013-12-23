@@ -1,7 +1,7 @@
 {
   "name": "grunt-divshot",
   "description": "Run Divshot.io locally",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "homepage": "https://github.com/divshot/grunt-divshot",
   "author": {
     "name": "Divshot",

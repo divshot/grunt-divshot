@@ -31,28 +31,28 @@ module.exports = function(grunt) {
     var options = this.options({
       port: superstaticDefaults.PORT,
       hostname: superstaticDefaults.HOST,
-      root: superstaticDefaults.DIRECTORY,
+      root: './',
       clean_urls: false,
       routes: {},
       cache_control: {},
       exclude: []
     });
     
-    if (!configFilesExists()) {
-      grunt.file.write(process.cwd() + '/divshot.json', JSON.stringify(options, null, 2));
-      createdConfigFile = true;
-    }
-    
     var config = configFile(this.options());
     
     // Start the server
     var server = grunt.util.spawn({
       cmd: path.resolve(__dirname, '../node_modules/.bin/superstatic'),
-      args: ['--port', options.port, '--host', options.hostname]
+      args: [
+        '--port', options.port,
+        '--host', options.hostname,
+        '--config', JSON.stringify(config)
+      ]
     }, function (err, result, code) {
       if (err) grunt.fail.fatal(err);
     });
     
+    // Info
     server.stdout.on('data', function (data) {
       grunt.log.write(data);
       process.nextTick(function () {
@@ -62,10 +62,12 @@ module.exports = function(grunt) {
       });
     });
     
+    // Errors
     server.stderr.on('data', function (data) {
       process.stderr.write(chalk.red(data.toString()));
     });
     
+    // Quit process?
     if (!options.keepAlive) process.nextTick(done);
   });
   
@@ -76,10 +78,6 @@ module.exports = function(grunt) {
     if (dioExists()) config = grunt.file.readJSON(process.cwd() + '/divshot.json');
     
     return _.extend(config, options);
-  }
-  
-  function configFilesExists () {
-    return dioExists() || ssExists();
   }
   
   function dioExists () {
