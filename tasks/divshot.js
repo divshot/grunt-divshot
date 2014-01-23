@@ -21,13 +21,13 @@ module.exports = function(grunt) {
 
   _.each(environments, function (environment) {
     grunt.registerTask('divshot:push:' + environment, function () {
-      push.call(this, environment, this.async());
+      push.call(this, environment);
     });
   });
 
   // Allow promotion up or down.
   grunt.registerTask('divshot:promote', function(src, dest) {
-    promote.call(this, src, dest, this.async());
+    promote.call(this, src, dest);
   });
 
   grunt.registerMultiTask('divshot', 'Run Divshot.io locally', function() {
@@ -93,7 +93,7 @@ module.exports = function(grunt) {
     return grunt.file.exists(process.cwd() + '/superstatic.json');
   }
 
-  function push (env, done) {
+  function push (env) {
     var done = this.async();
     var config = configFile(this.options());
     var cmd = path.resolve(__dirname, '../node_modules/.bin/divshot');
@@ -116,7 +116,7 @@ module.exports = function(grunt) {
     push.on('close', done);
   }
 
-  function promote(src, dest, done) {
+  function promote(src, dest) {
     var done = this.async();
     var config = configFile(this.options());
     var cmd = path.resolve(__dirname, '../node_modules/.bin/divshot');
