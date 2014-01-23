@@ -54,7 +54,9 @@ module.exports = function(grunt) {
         '--config', JSON.stringify(config)
       ]
     }, function (err, result, code) {
-      if (err) grunt.fail.fatal(err);
+      if (err) {
+        grunt.fail.fatal(err);
+      }
     });
 
     // Info
@@ -73,14 +75,20 @@ module.exports = function(grunt) {
     });
 
     // Quit process?
-    if (!options.keepAlive) process.nextTick(done);
+    if (!options.keepAlive) {
+      process.nextTick(done);
+    }
   });
 
   function configFile (options) {
     var config = {};
 
-    if (ssExists()) config = grunt.file.readJSON(process.cwd() + '/superstatic.json');
-    if (dioExists()) config = grunt.file.readJSON(process.cwd() + '/divshot.json');
+    if (ssExists()) {
+      config = grunt.file.readJSON(process.cwd() + '/superstatic.json');
+    }
+    if (dioExists()) {
+      config = grunt.file.readJSON(process.cwd() + '/divshot.json');
+    }
 
     return _.extend(config, options);
   }
@@ -99,7 +107,9 @@ module.exports = function(grunt) {
     var cmd = path.resolve(__dirname, '../node_modules/.bin/divshot');
     var args = ['push', env];
 
-    if (config.token) args = args.concat(['--token', config.token]);
+    if (config.token) {
+      args = args.concat(['--token', config.token]);
+    }
 
     run(cmd, args, done);
   }
@@ -110,7 +120,9 @@ module.exports = function(grunt) {
     var cmd = path.resolve(__dirname, '../node_modules/.bin/divshot');
     var args = ['promote', src, dest];
 
-    if (config.token) args = args.concat(['--token', config.token]);
+    if (config.token) {
+      args = args.concat(['--token', config.token]);
+    }
 
     run(cmd, args, done);
   }
@@ -120,7 +132,9 @@ module.exports = function(grunt) {
       cmd: cmd,
       args: args
     }, function(err, result, code) {
-      if (err) grunt.fail.fatal(err);
+      if (err) {
+        grunt.fail.fatal(err);
+      }
     });
 
     push.stdout.on('data', function(data) {
