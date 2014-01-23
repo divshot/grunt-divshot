@@ -27,7 +27,7 @@ module.exports = function(grunt) {
 
   // Allow promotion up or down.
   grunt.registerTask('divshot:promote', function(src, dest) {
-    promote(src, dest, this.async());
+    promote.call(this, src, dest, this.async());
   });
 
   grunt.registerMultiTask('divshot', 'Run Divshot.io locally', function() {
