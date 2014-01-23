@@ -101,19 +101,7 @@ module.exports = function(grunt) {
 
     if (config.token) args = args.concat(['--token', config.token]);
 
-    var push = grunt.util.spawn({ cmd: cmd, args: args }, function (err, result, code) {
-      if (err) grunt.fail.fatal(err);
-    });
-
-    push.stdout.on('data', function (data) {
-      grunt.log.write(data.toString());
-    });
-
-    push.stderr.on('data', function (data) {
-      process.stderr.write(data.toString());
-    });
-
-    push.on('close', done);
+    run(cmd, args, done);
   }
 
   function promote(src, dest) {
@@ -124,6 +112,10 @@ module.exports = function(grunt) {
 
     if (config.token) args = args.concat(['--token', config.token]);
 
+    run(cmd, args, done);
+  }
+
+  function run(cmd, args, done) {
     var push = grunt.util.spawn({
       cmd: cmd,
       args: args
