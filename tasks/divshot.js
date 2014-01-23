@@ -110,4 +110,30 @@ module.exports = function(grunt) {
 
     push.on('close', done);
   }
+
+  function promote(src, dest, done) {
+    var done = this.async();
+    var config = configFile(this.options());
+    var cmd = path.resolve(__dirname, '../node_modules/.bin/divshot');
+    var args = ['promote', src, dest];
+
+    if (config.token) args = args.concat(['--token', config.token]);
+
+    var push = grunt.util.spawn({
+      cmd: cmd,
+      args: args
+    }, function(err, result, code) {
+      if (err) grunt.fail.fatal(err);
+    });
+
+    push.stdout.on('data', function(data) {
+      grunt.log.write(data.toString());
+    });
+
+    push.stderr.on('data', function(data) {
+      process.stderr.write(data.toString());
+    });
+
+    push.on('close', done);
+  }
 };
