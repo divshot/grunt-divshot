@@ -104,30 +104,29 @@ module.exports = function(grunt) {
   function push (env) {
     var done = this.async();
     var config = configFile(this.options());
-    var cmd = path.resolve(__dirname, '../node_modules/.bin/divshot');
     var args = ['push', env];
 
     if (config.token) {
       args = args.concat(['--token', config.token]);
     }
 
-    run(cmd, args, done);
+    divshot(args, done);
   }
 
   function promote(src, dest) {
     var done = this.async();
     var config = configFile(this.options());
-    var cmd = path.resolve(__dirname, '../node_modules/.bin/divshot');
     var args = ['promote', src, dest];
 
     if (config.token) {
       args = args.concat(['--token', config.token]);
     }
 
-    run(cmd, args, done);
+    divshot(args, done);
   }
 
-  function run(cmd, args, done) {
+  function divshot(args, done) {
+    var cmd = path.resolve(__dirname, '../node_modules/.bin/divshot');
     var push = grunt.util.spawn({
       cmd: cmd,
       args: args
