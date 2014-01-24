@@ -104,7 +104,7 @@ Key/value pairs of glob to path cache control settings
 In your project's Gruntfile, add a section named any of the above tasks.
 
 ```js
-divshot: {
+'divshot:push:production': {
   options: {
     token: 'custom_access_token',
     root: './',
@@ -112,16 +112,8 @@ divshot: {
     routes: {
       '**': 'index.html'
     },
-  }
-},
-'divshot:push:production': {
-  options: {
-    clean_urls: true,
-    cache_control: {
-      "/assets/**": 31536000,
-      "/": false
-    },
-    exclude: ['/src']
+    cacheControl: {},
+    exclude: []
   }
 }
 ```
