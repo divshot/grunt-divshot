@@ -139,19 +139,6 @@ divshot: {
 }
 ```
 
-You can also create your own custom tasks to manage deploys.
-
-```coffeescript
-# Make production deploys a promotion of staging.
-grunt.registerTask 'deploy', (env) ->
-  if env in ['development', 'staging']
-    grunt.task.run ["divshot:push:#{env}"]
-  else if env is 'production'
-    grunt.task.run ['divshot:promote:staging:production']
-  else
-    grunt.fail.fatal "Bad deploy target specified. Expected one of [development, staging, production] but got #{env}."
-```
-
 ### Options
 
 #### token
