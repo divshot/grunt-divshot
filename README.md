@@ -93,11 +93,12 @@ Key/value pairs of glob to path cache control settings
 
 ## Deploying to Divshot.io with Grunt
 
-**grunt-divshot** automatically creates 3 tasks you can use to deploy to [Divshot.io](http://divshot.io) using Grunt.
+**grunt-divshot** automatically creates 4 tasks you can use to deploy to [Divshot.io](http://divshot.io) using Grunt.
 
 * ` divshot:push:production `
 * ` divshot:push:staging `
 * ` divshot:push:development `
+* ` divshot:promote `
 
 ### Usage
 In your project's Gruntfile, add a section named any of the above tasks.
@@ -111,10 +112,23 @@ In your project's Gruntfile, add a section named any of the above tasks.
     routes: {
       '**': 'index.html'
     },
-    cache_control: {},
+    cacheControl: {},
     exclude: []
   }
 }
+```
+
+You can also create your own custom tasks to manage deploys.
+
+```coffeescript
+# Make production deploys a promotion of staging.
+grunt.registerTask 'deploy', (env) ->
+  if env in ['development', 'staging']
+    grunt.task.run ["divshot:push:#{env}"]
+  else if env is 'production'
+    grunt.task.run ['divshot:promote:staging:production']
+  else
+    grunt.fail.fatal "Bad deploy target specified. Expected one of [development, staging, production] but got #{env}."
 ```
 
 ### Options

@@ -18,13 +18,18 @@ module.exports = function(grunt) {
     'staging',
     'production'
   ];
-  
+
   _.each(environments, function (environment) {
     grunt.registerTask('divshot:push:' + environment, function () {
-      push.call(this, environment, this.async());
+      push.call(this, environment);
     });
   });
-  
+
+  // Allow promotion up or down.
+  grunt.registerTask('divshot:promote', function(src, dest) {
+    promote.call(this, src, dest);
+  });
+
   grunt.registerMultiTask('divshot', 'Run Divshot.io locally', function() {
     var createdConfigFile = false;
     var done = this.async();
@@ -37,9 +42,9 @@ module.exports = function(grunt) {
       cache_control: {},
       exclude: []
     });
-    
+
     var config = configFile(this.options());
-    
+
     // Start the server
     var server = grunt.util.spawn({
       cmd: path.resolve(__dirname, '../node_modules/.bin/superstatic'),
@@ -49,9 +54,11 @@ module.exports = function(grunt) {
         '--config', JSON.stringify(config)
       ]
     }, function (err, result, code) {
-      if (err) grunt.fail.fatal(err);
+      if (err) {
+        grunt.fail.fatal(err);
+      }
     });
-    
+
     // Info
     server.stdout.on('data', function (data) {
       grunt.log.write(data);
@@ -61,53 +68,82 @@ module.exports = function(grunt) {
         }
       });
     });
-    
+
     // Errors
     server.stderr.on('data', function (data) {
       process.stderr.write(chalk.red(data.toString()));
     });
-    
+
     // Quit process?
-    if (!options.keepAlive) process.nextTick(done);
+    if (!options.keepAlive) {
+      process.nextTick(done);
+    }
   });
-  
+
   function configFile (options) {
     var config = {};
-    
-    if (ssExists()) config = grunt.file.readJSON(process.cwd() + '/superstatic.json');
-    if (dioExists()) config = grunt.file.readJSON(process.cwd() + '/divshot.json');
-    
+
+    if (ssExists()) {
+      config = grunt.file.readJSON(process.cwd() + '/superstatic.json');
+    }
+    if (dioExists()) {
+      config = grunt.file.readJSON(process.cwd() + '/divshot.json');
+    }
+
     return _.extend(config, options);
   }
-  
+
   function dioExists () {
     return grunt.file.exists(process.cwd() + '/divshot.json');
   }
-  
+
   function ssExists() {
     return grunt.file.exists(process.cwd() + '/superstatic.json');
   }
-  
-  function push (env, done) {
+
+  function push (env) {
     var done = this.async();
     var config = configFile(this.options());
-    var cmd = path.resolve(__dirname, '../node_modules/.bin/divshot');
     var args = ['push', env];
-    
-    if (config.token) args = args.concat(['--token', config.token]);
-    
-    var push = grunt.util.spawn({ cmd: cmd, args: args }, function (err, result, code) {
-      if (err) grunt.fail.fatal(err);
+
+    if (config.token) {
+      args = args.concat(['--token', config.token]);
+    }
+
+    divshot(args, done);
+  }
+
+  function promote(src, dest) {
+    var done = this.async();
+    var config = configFile(this.options());
+    var args = ['promote', src, dest];
+
+    if (config.token) {
+      args = args.concat(['--token', config.token]);
+    }
+
+    divshot(args, done);
+  }
+
+  function divshot(args, done) {
+    var cmd = path.resolve(__dirname, '../node_modules/.bin/divshot');
+    var push = grunt.util.spawn({
+      cmd: cmd,
+      args: args
+    }, function(err, result, code) {
+      if (err) {
+        grunt.fail.fatal(err);
+      }
     });
-    
-    push.stdout.on('data', function (data) {
+
+    push.stdout.on('data', function(data) {
       grunt.log.write(data.toString());
     });
-    
-    push.stderr.on('data', function (data) {
+
+    push.stderr.on('data', function(data) {
       process.stderr.write(data.toString());
     });
-    
+
     push.on('close', done);
   }
 };
