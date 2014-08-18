@@ -57,11 +57,6 @@ module.exports = function(grunt) {
     // Info
     server.stdout.on('data', function (data) {
       grunt.log.write(data);
-      process.nextTick(function () {
-        if (grunt.file.exists(process.cwd() + '/divshot.json') && createdConfigFile) {
-          grunt.file.delete(process.cwd() + '/divshot.json');
-        }
-      });
     });
     
     // Errors
