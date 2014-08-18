@@ -5,19 +5,8 @@ var pkg = require('../package.json');
 var _ = require('lodash');
 var format = require('chalk');
 var superstaticDefaults = require('superstatic/lib/defaults');
-var environments = [
-  'development',
-  'staging',
-  'production'
-];
 
 module.exports = function(grunt) {
-  _.each(environments, function (environment) {
-    grunt.registerTask('divshot:push:' + environment, function () {
-      push.call(this, environment, this.async());
-    });
-  });
-  
   grunt.registerMultiTask('divshot', pkg.description, function() {
     var done = this.async();
     var nameArgs = this.nameArgs;
@@ -60,6 +49,31 @@ module.exports = function(grunt) {
     if (!options.keepAlive) process.nextTick(done);
   });
   
+  // Pushing
+  grunt.registerMultiTask('divshot:push', function () {
+    var done = this.async();
+    var config = configFile(this.options());
+    var cmd = path.resolve(__dirname, '../node_modules/.bin/divshot');
+    var environment = this.target || 'development';
+    var args = ['push', environment];
+    
+    if (config.token) args = args.concat(['--token', config.token]);
+    
+    var pusher = grunt.util.spawn({ cmd: cmd, args: args }, function (err, result, code) {
+      if (err) grunt.fail.fatal(err);
+    });
+    
+    pusher.stdout.on('data', function (data) {
+      process.stdout.write(data);
+    });
+    
+    pusher.stderr.on('data', function (data) {
+      process.stderr.write(data);
+    });
+    
+    pusher.on('close', done);
+  });
+  
   function configFile (options) {
     var config = {};
     
@@ -75,28 +89,5 @@ module.exports = function(grunt) {
   
   function ssExists() {
     return grunt.file.exists(process.cwd() + '/superstatic.json');
-  }
-  
-  function push (env, done) {
-    var done = this.async();
-    var config = configFile(this.options());
-    var cmd = path.resolve(__dirname, '../node_modules/.bin/divshot');
-    var args = ['push', env];
-    
-    if (config.token) args = args.concat(['--token', config.token]);
-    
-    var push = grunt.util.spawn({ cmd: cmd, args: args }, function (err, result, code) {
-      if (err) grunt.fail.fatal(err);
-    });
-    
-    push.stdout.on('data', function (data) {
-      grunt.log.write(data.toString());
-    });
-    
-    push.stderr.on('data', function (data) {
-      process.stderr.write(data.toString());
-    });
-    
-    push.on('close', done);
   }
 };
