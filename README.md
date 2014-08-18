@@ -95,29 +95,24 @@ Key/value paris of globs that describe various redirects within your app
 
 ## Deploying to Divshot with Grunt
 
-**grunt-divshot** automatically creates 3 tasks you can use to deploy to [Divshot.io](http://divshot.io) using Grunt.
-
-* ` divshot:push:production `
-* ` divshot:push:staging `
-* ` divshot:push:development `
+**grunt-divshot** lets you deploy to any environment that is available to you on Divshot (i.e. production, staging, etc.)
 
 ### Usage
 In your project's Gruntfile, add a section named any of the above tasks.
 
 ```js
-'divshot:push:production': {
-  options: {
-    token: 'custom_access_token',
-    root: './',
-    clean_urls: false,
-    routes: {
-      '**': 'index.html'
-    },
-    cache_control: {},
-    exclude: []
+'divshot:push': {
+  production: {
+    // options
+  },
+  staging: {
+     // options
   }
 }
 ```
+
+The values in your `divshot.json` file are the values that will configure your app on the Divshot hosting servers. If you have any special configuration in your `Gruntfile.js` under `server`, you'll need to add those values to your `divshot.json` file in order to see their affects on Divshot.
+
 
 ### Options
 
@@ -125,31 +120,7 @@ In your project's Gruntfile, add a section named any of the above tasks.
 type: `String`
 Default value: `null`
 
-Override your user access token. Useful for build and deploy environments.
-
-#### root
-Type: `String`
-Default value: `./`
-
-The relative path the the directory to run the server out of
-
-#### clean_urls
-Type: `Boolean`
-Default value: `false`
-
-Force Divshot.io server to write clean urls for `.html` files
-
-#### routes
-Type: `Object`
-Default value: `{}`
-
-Key/value pairs of glob to path routing
-
-#### cache_control
-Type: `Object`
-Default value: `{}`
-
-Key/value pairs of glob to path cache control settings
+Optionally override your user access token. Useful for build and deploy environments.
 
 Each corresponds the features available in the [divshot-cli](https://github.com/divshot/divshot-cli/blob/master/README.md#push)
 
@@ -158,6 +129,3 @@ type: `Array`
 Default value: `[]`
 
 Array of globs of files or directories to exclude on deploy
-
-## Contributing
-In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
