@@ -2,8 +2,8 @@
 
 Perform common [Divshot](http://divshot.com) commands using Grunt.
 
-* Run a local server
-* Deploy to various hosting environments
+* [Run a local server](https://github.com/divshot/grunt-divshot#the-divshot-task)
+* [Deploy to various hosting environments](https://github.com/divshot/grunt-divshot#deploying-to-divshot-with-grunt)
 
 See [Divshot docs](http://docs.divshot.io/guides/configuration) for documentation and details about options and how to configure your app.
 
