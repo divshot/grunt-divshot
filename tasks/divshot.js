@@ -8,27 +8,29 @@
 
 'use strict';
 
+var path = require('path');
+var pkg = require('../package.json');
+var _ = require('lodash');
+var chalk = require('chalk');
+var superstaticDefaults = require('superstatic/lib/defaults');
+var environments = [
+  'development',
+  'staging',
+  'production'
+];
+
 module.exports = function(grunt) {
-  var path = require('path');
-  var _ = require('lodash');
-  var chalk = require('chalk');
-  var superstaticDefaults = require('superstatic/lib/defaults');
-  var environments = [
-    'development',
-    'staging',
-    'production'
-  ];
-  
   _.each(environments, function (environment) {
     grunt.registerTask('divshot:push:' + environment, function () {
       push.call(this, environment, this.async());
     });
   });
   
-  grunt.registerMultiTask('divshot', 'Run Divshot.io locally', function() {
+  grunt.registerMultiTask('divshot', pkg.description, function() {
     var createdConfigFile = false;
     var done = this.async();
     var options = this.options({
+      keepAlive: true,
       port: superstaticDefaults.PORT,
       hostname: superstaticDefaults.HOST,
       root: './',

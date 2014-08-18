@@ -1,12 +1,9 @@
 {
   "name": "grunt-divshot",
-  "description": "Run Divshot.io locally",
-  "version": "0.3.3",
+  "description": "Grunt task for Divshot",
+  "version": "0.4.0",
   "homepage": "https://github.com/divshot/grunt-divshot",
-  "author": {
-    "name": "Divshot",
-    "email": "scott@divshot.com"
-  },
+  "author": "Divshot",
   "repository": {
     "type": "git",
     "url": "https://github.com/divshot/grunt-divshot.git"
@@ -22,10 +19,10 @@
   ],
   "main": "Gruntfile.js",
   "engines": {
-    "node": ">= 0.8.0"
+    "node": ">= 0.10.0"
   },
   "scripts": {
-    "test": "grunt test"
+    "test": "echo 'no tests'"
   },
   "devDependencies": {
     "grunt-contrib-jshint": "~0.6.0",
@@ -40,9 +37,8 @@
     "gruntplugin"
   ],
   "dependencies": {
-    "superstatic": "0.9.x",
-    "divshot-cli": "0.9.x",
-    "lodash": "~2.3.0",
-    "chalk": "~0.4.0"
+    "superstatic": "^0.13.0",
+    "lodash": "^2.4.0",
+    "chalk": "^0.5.1"
   }
 }
