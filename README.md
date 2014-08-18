@@ -1,11 +1,11 @@
 # grunt-divshot
 
-Perform common Divshot.io commands using Grunt.
+Perform common [Divshot](http://divshot.com) commands using Grunt.
 
 * Run a local server
-* Deploy to production, staging, and devleopment
+* Deploy to various hosting environments
 
-See [Divshot.io docs](http://docs.divshot.io/guides/configuration) for documentation and details about options.
+See [Divshot docs](http://docs.divshot.io/guides/configuration) for documentation and details about options and how to configure your app.
 
 ## Getting Started
 This plugin requires Grunt `~0.4.1`
@@ -32,15 +32,7 @@ grunt.initConfig({
   divshot: {
     server: {
       options: {
-        keepAlive: true,
-        port: 3474,
-        hostname: 'localhost',
-        root: './',
-        clean_urls: false,
-        routes: {
-          '**': 'index.html'
-        },
-        cache_control: {}
+        //
       }
     }
   }
@@ -49,9 +41,13 @@ grunt.initConfig({
 
 ### Options
 
+By default, `grunt-divshot` will read your configurations from your [`divshot.json`](http://docs.divshot.io/guides/configuration) file. If no file is provided, the defaults will be used.
+
+Each of these options are, well, optional. Any values provided will override any configurations you have in your [`divshot.json`](http://docs.divshot.io/guides/configuration) file.
+
 #### keepAlive
 Type: `Boolean`
-Default value: `false`
+Default value: `true`
 
 Once grunt's tasks have completed, the web server stops. This behavior can be changed with the `keepAlive` option
 
@@ -91,7 +87,13 @@ Default value: `{}`
 
 Key/value pairs of glob to path cache control settings
 
-## Deploying to Divshot.io with Grunt
+#### redirects
+Type: `Object`
+Default value: `{}`
+
+Key/value paris of globs that describe various redirects within your app
+
+## Deploying to Divshot with Grunt
 
 **grunt-divshot** automatically creates 3 tasks you can use to deploy to [Divshot.io](http://divshot.io) using Grunt.
 
