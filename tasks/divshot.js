@@ -1,17 +1,9 @@
-/*
- * grunt-divshot
- * https://github.com/divshot/grunt-divshot
- *
- * Copyright (c) 2013 Divshot
- * Licensed under the MIT license.
- */
-
 'use strict';
 
 var path = require('path');
 var pkg = require('../package.json');
 var _ = require('lodash');
-var chalk = require('chalk');
+var format = require('chalk');
 var superstaticDefaults = require('superstatic/lib/defaults');
 var environments = [
   'development',
@@ -27,8 +19,8 @@ module.exports = function(grunt) {
   });
   
   grunt.registerMultiTask('divshot', pkg.description, function() {
-    var createdConfigFile = false;
     var done = this.async();
+    var nameArgs = this.nameArgs;
     var options = this.options({
       keepAlive: true,
       port: superstaticDefaults.PORT,
@@ -56,12 +48,12 @@ module.exports = function(grunt) {
     
     // Info
     server.stdout.on('data', function (data) {
-      grunt.log.write(data);
+      grunt.log.write('\n' + format.underline(nameArgs) + ': ' + data);
     });
     
     // Errors
     server.stderr.on('data', function (data) {
-      process.stderr.write(chalk.red(data.toString()));
+      process.stderr.write(format.red(data.toString()));
     });
     
     // Quit process?
