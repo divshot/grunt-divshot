@@ -111,7 +111,7 @@ In your project's Gruntfile, add a section named any of the above tasks.
 }
 ```
 
-The values in your `divshot.json` file are the values that will configure your app on the Divshot hosting servers. If you have any special configuration in your `Gruntfile.js` under `server`, you'll need to add those values to your `divshot.json` file in order to see their affects on Divshot.
+The values in your `divshot.json` file are the values that will configure your app on the Divshot hosting servers. If you have any special configuration in your `Gruntfile.js` under `server`, you'll need to add those values to your `divshot.json` file in order to see their effects on Divshot.
 
 
 ### Options
