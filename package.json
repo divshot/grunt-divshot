@@ -1,7 +1,7 @@
 {
   "name": "grunt-divshot",
   "description": "Grunt task for Divshot",
-  "version": "0.4.0",
+  "version": "1.0.0",
   "homepage": "https://github.com/divshot/grunt-divshot",
   "author": "Divshot",
   "repository": {
@@ -33,9 +33,9 @@
     "grunt"
   ],
   "dependencies": {
-    "chalk": "^0.5.1",
-    "divshot-cli": "^0.15.7",
-    "lodash": "^2.4.0",
-    "superstatic": "^0.13.0"
+    "chalk": "0.5.x",
+    "divshot-cli": "1.x.x",
+    "lodash": "2.4.x",
+    "superstatic": "1.x.x"
   }
 }
