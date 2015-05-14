@@ -7,6 +7,8 @@ var format = require('chalk');
 var superstaticDefaults = require('superstatic/lib/defaults');
 
 module.exports = function(grunt) {
+  var cmdExtension = /^win/.test(process.platform) ? '.cmd' : '';
+
   grunt.registerMultiTask('divshot', pkg.description, function() {
     var done = this.async();
     var nameArgs = this.nameArgs;
@@ -25,7 +27,7 @@ module.exports = function(grunt) {
     
     // Start the server
     var server = grunt.util.spawn({
-      cmd: path.resolve(__dirname, '../node_modules/.bin/superstatic'),
+      cmd: path.resolve(__dirname, '../node_modules/.bin/superstatic' + cmdExtension),
       args: [
         '--port', options.port,
         '--host', options.hostname,
@@ -53,7 +55,7 @@ module.exports = function(grunt) {
   grunt.registerMultiTask('divshot:push', function () {
     var done = this.async();
     var config = configFile(this.options());
-    var cmd = path.resolve(__dirname, '../node_modules/.bin/divshot');
+    var cmd = path.resolve(__dirname, '../node_modules/.bin/divshot' + cmdExtension);
     var environment = this.target || 'development';
     var args = ['push', environment];
     
